@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: matrix
+  name: matrix
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: matrix
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: matrix
+    spec:
+      volumes:
+        - name: config
+          configMap:
+            name: matrix
+      containers:
+      - image: matrixdotorg/dendrite-monolith:latest
+        name: dendrite-monolith
+        volumeMounts:
+        - name: config
+          mountPath: /etc/dendrite
+status: {}
